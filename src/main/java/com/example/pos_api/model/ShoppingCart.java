@@ -8,16 +8,12 @@ import lombok.Data;
 
 @Entity
 @Data
-public class Product {
+public class ShoppingCart {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-    private String name;
-    private String description;
-    private Double price;
-    private String imageUrl;
-    private String stock;
-    private String category;
+    private Long id;
+    private Integer quantity;
+
 
 }
