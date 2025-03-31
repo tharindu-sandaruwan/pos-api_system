@@ -1,10 +1,9 @@
 package com.example.pos_api.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.List;
 
 @Entity
 @Data
@@ -19,5 +18,16 @@ public class User {
     private String email;
     private String phoneNumber;
     private String password;
+
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
+
+    @OneToMany(mappedBy ="user" )
+    private List <Order> orderList;
+
+    @OneToMany(mappedBy = "user")
+    private List <Review> reviewList;
+
+
 
 }
