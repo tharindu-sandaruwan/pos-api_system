@@ -5,14 +5,16 @@ import lombok.Data;
 
 @Entity
 @Data
-public class Vendor {
+public class Review {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String shop_name;
-    private String description;
+    private String rating;
+    private String comment;
 
-    @OneToOne
+    @ManyToOne
     private User user;
+
 
 }
