@@ -5,16 +5,20 @@ import lombok.Data;
 
 @Entity
 @Data
+@Table(name = "reviews")
 public class Review {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String rating;
     private String comment;
 
     @ManyToOne
     private User user;
+
+    @ManyToOne
+    private Product product;
 
 
 }

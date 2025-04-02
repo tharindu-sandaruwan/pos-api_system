@@ -7,10 +7,11 @@ import java.util.List;
 
 @Entity
 @Data
+@Table(name = "users")
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String userName;
     private String firstName;
@@ -23,7 +24,7 @@ public class User {
     private UserRole role;
 
     @OneToMany(mappedBy ="user" )
-    private List <Order> orderList;
+    private List <OrderRequest> orderList;
 
     @OneToMany(mappedBy = "user")
     private List <Review> reviewList;
