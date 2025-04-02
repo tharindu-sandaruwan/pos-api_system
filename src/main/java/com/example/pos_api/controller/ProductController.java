@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
+
 public class ProductController {
 
     private ProductService productService;
