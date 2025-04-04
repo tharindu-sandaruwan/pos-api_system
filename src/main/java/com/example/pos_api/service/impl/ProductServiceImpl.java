@@ -1,5 +1,6 @@
 package com.example.pos_api.service.impl;
 
+import com.cloudinary.Cloudinary;
 import com.example.pos_api.controller.requestDTO.OrderRequestDTO;
 import com.example.pos_api.controller.requestDTO.ProductRequestDTO;
 import com.example.pos_api.model.Product;
@@ -8,8 +9,11 @@ import com.example.pos_api.service.ProductService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.antlr.v4.runtime.tree.xpath.XPath.findAll;
 
@@ -19,9 +23,11 @@ public class ProductServiceImpl implements ProductService {
 
     private ProductRepository productRepository;
 
+    private Cloudinary cloudinary;
+
 
     @Override
-    public Product create(ProductRequestDTO productRequestDTO) {
+    public Product create(ProductRequestDTO productRequestDTO)throws IOException {
 
         Product product = new Product();
         product.setName(productRequestDTO.getName());
@@ -29,7 +35,16 @@ public class ProductServiceImpl implements ProductService {
         product.setCategory(productRequestDTO.getCategory());
         product.setDescription(productRequestDTO.getDescription());
         product.setStock(productRequestDTO.getStock());
-        product.setImageUrl(productRequestDTO.getImageUrl());
+
+
+        String image = cloudinary.uploader()
+                .upload(productRequestDTO.getImageUrl().getBytes(),
+                        Map.of("public_id", UUID.randomUUID().toString()))
+                .get("url")
+                .toString();
+
+        product.setImageUrl(image);
+        productRepository.save(product);
 
         productRepository.save(product);
         return product;
@@ -43,7 +58,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product updateById(Long productId, ProductRequestDTO productRequestDTO) {
+    public Product updateById(Long productId, ProductRequestDTO productRequestDTO)  {
 
         Optional<Product> productOptional = productRepository.findById(productId);
 
@@ -56,7 +71,11 @@ public class ProductServiceImpl implements ProductService {
         product.setCategory(productRequestDTO.getCategory());
         product.setDescription(productRequestDTO.getDescription());
         product.setStock(productRequestDTO.getStock());
-        product.setImageUrl(productRequestDTO.getImageUrl());
+
+
+
+
+
         return productRepository.save(product);
     }
 

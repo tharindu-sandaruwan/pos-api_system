@@ -7,6 +7,7 @@ import com.example.pos_api.service.ProductService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class ProductController {
     private ProductService productService;
 
     @PostMapping(value = "/products")
-    public void create(@RequestBody ProductRequestDTO productRequestDTO) {
+    public void create(@ModelAttribute ProductRequestDTO productRequestDTO)throws IOException {
         productService.create(productRequestDTO);
     }
 

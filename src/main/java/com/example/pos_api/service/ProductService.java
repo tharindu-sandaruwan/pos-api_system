@@ -5,11 +5,12 @@ import com.example.pos_api.controller.requestDTO.ProductRequestDTO;
 import com.example.pos_api.model.OrderRequest;
 import com.example.pos_api.model.Product;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface ProductService {
 
-    Product create(ProductRequestDTO productRequestDTO);
+    Product create(ProductRequestDTO productRequestDTO) throws IOException;
 
     List<Product> findAll();
 
