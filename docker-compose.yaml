@@ -1,0 +1,28 @@
+version: "3.7"
+services:
+  api_service:
+    image: "spring-boot-dc3:v1"
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - 8090:8080
+    networks:
+      - zerocode_lk_pos_api_network
+    depends_on:
+      - mysqldb
+
+  mysqldb:
+    image: "mysql:8.0"
+    container_name: "mysql-pos-db"
+    restart: always
+    ports:
+      - 3311:3306
+    networks:
+      - zerocode_lk_pos_api_network
+    environment:
+      MYSQL_ROOT_PASSWORD: pos123
+      MYSQL_DATABASE: pos_db
+networks:
+  zerocode_lk_pos_api_network:
